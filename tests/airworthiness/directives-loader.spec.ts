@@ -161,4 +161,23 @@ describe('Parsing literal data', () => {
         expect(entry.description).toBeDefined();
     });
 
+    it("Skips rows that don't have proper data", () => {
+        let result = DirectivesLoader.listAllDirectives("tests/airworthiness/data/gfa_multi_row_ignore_inactive.xlsx", true);
+
+        expect(result).toBeDefined();
+        expect(result.length).toBe(2);
+
+        // Only check the relevant data to make sure we got the right row
+        let entry = result[0];
+        expect(entry.documentReference).toBe("CASA AD/GEN/87");
+        expect(entry.issueNumber).toBe(1);
+        expect(entry.active).toBe(true);
+        expect(entry.issueDate).toBe("2017-09-29");
+
+        entry = result[1];
+        expect(entry.documentReference).toBe("GFA AD 0017");
+        expect(entry.issueNumber).toBe(2);
+        expect(entry.active).toBe(true);
+        expect(entry.typeCertificate).toBe("Standard Cirrus");
+    });
 });

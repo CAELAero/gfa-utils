@@ -15,7 +15,7 @@ import { AircraftDirectiveData } from './aircraft-directive-data';
  * http://doc.glidingaustralia.org/index.php?option=com_docman&view=download&alias=2136-gfa-ad-an-awa-register
  */
 export class DirectivesLoader {
-    public static listAllDirectives(source: string): AircraftDirectiveData[] {
+    public static listAllDirectives(source: string, ignoreInactive?: boolean): AircraftDirectiveData[] {
         if(!source) {
             throw new Error("No source given to parse");
         }
@@ -54,6 +54,11 @@ export class DirectivesLoader {
             }
 
             let isActive: boolean = (row[6] == null) || ("active" == row[6].toLowerCase());
+
+            if(ignoreInactive && !isActive) {
+                continue;
+            }
+
             let base_date = row[2];
             let date_str = null;
 
