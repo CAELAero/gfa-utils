@@ -19,9 +19,10 @@ describe('Construction tests', () => {
         const expectedActive = false;
         const expectedCert = "DG1000S";
         const expectedType = ADType.ENGINE;
+        const expectedDate = "2018-02-27";
         const expectedDescription = "Something happened";
 
-        let result = AircraftDirectiveData.create(expectedRef, expectedIssue, expectedActive,
+        let result = AircraftDirectiveData.create(expectedRef, expectedIssue, expectedActive, expectedDate,
                                                   expectedCert, expectedType, expectedDescription);
 
         expect(result).not.toBeNull();
@@ -44,6 +45,7 @@ describe('Construction tests', () => {
         expect(result.documentReference).toBe(expectedRef);
         expect(result.issueNumber).toBe(expectedIssue);
         expect(result.active).toBe(expectedActive);
+        expect(result.issueDate).toBeUndefined();
         expect(result.typeCertificate).toBeUndefined();
         expect(result.type).toBeUndefined();
         expect(result.description).toBeUndefined();

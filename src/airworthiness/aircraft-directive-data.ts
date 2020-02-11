@@ -13,11 +13,15 @@ export class AircraftDirectiveData {
     issueNumber: number = 0;
     active: boolean = false;
 
+    /** ISO format string for the date */
+    issueDate?: string;
+
+    /** Type certificate this AD entry effects */
     typeCertificate?: string;
     type?: ADType;
     description?: string;
 
-    public static create(ref: string, issue: number, active: boolean, typeCert?: string, type?: ADType, description?: string) {
+    public static create(ref: string, issue: number, active: boolean, date?: string, typeCert?: string, type?: ADType, description?: string) {
         if(issue <= 0) {
             throw new Error("Issue number must be greater than 0");
         }
@@ -26,6 +30,7 @@ export class AircraftDirectiveData {
         retval.documentReference = ref;
         retval.issueNumber  = issue;
         retval.active = active;
+        retval.issueDate = date;
         retval.typeCertificate = typeCert;
         retval.type = type;
         retval.description = description;

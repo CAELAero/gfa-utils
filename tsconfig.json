@@ -3,7 +3,7 @@
   "compilerOptions": {
     "alwaysStrict": true,
     "noImplicitAny": true,
-    "strictNullChecks": true,
+    "strictNullChecks": false,
     "declaration": true,
     "declarationMap": true,
     "lib": [
