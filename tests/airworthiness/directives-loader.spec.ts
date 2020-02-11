@@ -98,4 +98,19 @@ describe('Parsing literal data', () => {
         expect(entry.type).toBeUndefined();
         expect(entry.description).toBe("Inspection of the Control Column Mounting Bulkheads");
     });
+    it('Missing active entry is considered active', () => {
+        let result = DirectivesLoader.listAllDirectives("tests/airworthiness/data/gfa_single_row_missing_active.xlsx");
+
+        expect(result).toBeDefined();
+        expect(result.length).toBe(1);
+
+        let entry = result[0];
+        expect(entry.documentReference).toBe("GFA AD 0017");
+        expect(entry.issueNumber).toBe(2);
+        expect(entry.active).toBe(true);
+        expect(entry.issueDate).toBe("1998-09-17");
+        expect(entry.typeCertificate).toBe("Standard Cirrus");
+        expect(entry.type).toBe(ADType.GLIDER);
+        expect(entry.description).toBe("Inspection of the Control Column Mounting Bulkheads");
+    });
 });

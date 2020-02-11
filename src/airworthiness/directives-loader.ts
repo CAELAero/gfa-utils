@@ -46,7 +46,7 @@ export class DirectivesLoader {
         for(let i = 5; i < sheet_data.length; i++) {
             let row = sheet_data[i];
 
-            let isActive: boolean = "active" == row[6].toLowerCase();
+            let isActive: boolean = (row[6] == null) || ("active" == row[6].toLowerCase());
             let base_date = row[2];
             let date_str = null;
 
