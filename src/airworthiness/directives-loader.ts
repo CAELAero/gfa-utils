@@ -46,6 +46,13 @@ export class DirectivesLoader {
         for(let i = 5; i < sheet_data.length; i++) {
             let row = sheet_data[i];
 
+            // Ignore rows that don't have the right number of
+            // columns as they are comment rows. 7 columns in regular data, but if the
+            // active field value is missing, then the reader will only tell us there are 6
+            if(row.length < 6) {
+                continue;
+            }
+
             let isActive: boolean = (row[6] == null) || ("active" == row[6].toLowerCase());
             let base_date = row[2];
             let date_str = null;
