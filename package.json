@@ -31,6 +31,7 @@
   "scripts": {
     "build": "tsc --build",
     "test": "jest --config jestconfig.json",
+    "coveralls": "jest --coverage && cat ./tests/coverage/lcov.info | coveralls",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "lint": "tslint -p tsconfig.json",
     "prepublishOnly": "npm test && npm run lint",
@@ -42,6 +43,7 @@
   "devDependencies": {
     "@types/jest": "^25.1.0",
     "@types/node": "^13.7.0",
+    "coveralls": "^3.0.9",
     "jest": "^25.1.0",
     "prettier": "^1.19.1",
     "ts-jest": "^25.2.0",
