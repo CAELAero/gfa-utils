@@ -3,11 +3,11 @@
   "compilerOptions": {
     "outDir": "./build/spec",
     "types": [
-      "jasmine",
+      "jest",
       "node"
     ]
   },
   "include": [
-    "tests/**/*.spec.ts",
+    "tests/**/*.spec.ts"
   ]
 }

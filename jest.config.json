@@ -1,0 +1,26 @@
+{
+  "globals": {
+    "ts-jest": {
+      "tsConfig": "tsconfig.spec.json"
+    }
+  },
+  "collectCoverage": true,
+  "collectCoverageFrom": [
+    "src/**/*.ts"
+  ],
+  "moduleFileExtensions": ["js", "ts", "json", "node"],
+  "preset": "ts-jest",
+  "testEnvironment": "node",
+  "testRegex": "(/tests/.*|(\\.|/)(test|spec))\\.(ts)$",
+  "testPathIgnorePatterns": [
+    "/node_modules/"
+  ],
+  "transform": {
+    "^.+\\.js?$": "babel-jest",
+    "^.+\\.(ts|tsx)?$": "ts-jest"
+  },
+  "transformIgnorePatterns": [
+    "^.+\\.js$"
+  ],
+  "verbose": true
+}

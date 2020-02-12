@@ -7,9 +7,11 @@
     "declaration": true,
     "declarationMap": true,
     "lib": [
-      "es6"
+      "es6",
+      "esnext"
     ],
     "module": "esnext",
+    "esModuleInterop": true,
     "outDir": "build/lib",
     "rootDir": "src",
     "strict": true,
