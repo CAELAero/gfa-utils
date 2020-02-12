@@ -26,7 +26,7 @@ export class AircraftDirectiveData {
             throw new Error("Issue number must be greater than 0");
         }
 
-        let retval = new AircraftDirectiveData();
+        const retval = new AircraftDirectiveData();
         retval.documentReference = ref;
         retval.issueNumber  = issue;
         retval.active = active;

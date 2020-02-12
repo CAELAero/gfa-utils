@@ -22,31 +22,31 @@ export class DirectivesLoader {
 
         // First sheet is the Help Sheet, 2nd is the real data, 3rd is Websites to find stuff at
         // Use excel dates to ensure that we don't have TZ issues in conversions later.
-        let options = {
+        const options = {
             cellDates: false
         };
 
-        let workbook: WorkBook = readFile(source, options);
-        let loaded_data = workbook.Sheets[workbook.SheetNames[1]];
+        const workbook: WorkBook = readFile(source, options);
+        const loaded_data = workbook.Sheets[workbook.SheetNames[1]];
 
         // Could we find the right sheet? undefined or null here if not. Throw error
         if(!loaded_data) {
             throw new Error("Unable to locate the required sheet in " + source);
         }
 
-        let sheet_data: any[][] = utils.sheet_to_json(loaded_data, {
+        const sheet_data: any[][] = utils.sheet_to_json(loaded_data, {
             header: 1,
             blankrows: false,
             range: 1
         });
 
-        let retval: AircraftDirectiveData[] = [];
+        const retval: AircraftDirectiveData[] = [];
 
-        let name_to_match = (matchTypeCertName && matchTypeCertName.trim().length > 1) ? matchTypeCertName.trim() : null;
+        const name_to_match = (matchTypeCertName && matchTypeCertName.trim().length > 1) ? matchTypeCertName.trim() : null;
 
         // Need to skip the first 6 rows manually.
         for(let i = 5; i < sheet_data.length; i++) {
-            let row = sheet_data[i];
+            const row = sheet_data[i];
 
             // Ignore rows that don't have the right number of
             // columns as they are comment rows. 7 columns in regular data, but if the
@@ -64,21 +64,21 @@ export class DirectivesLoader {
             // [5]: AD Subject
             // [6]: AD/AN Document Status
 
-            if(name_to_match && name_to_match != row[3]) {
+            if(name_to_match && name_to_match !== row[3]) {
                 continue;
             }
 
-            let isActive: boolean = (row[6] == null) || ("active" == row[6].toLowerCase());
+            const isActive: boolean = (row[6] == null) || ("active" === row[6].toLowerCase());
 
             if(ignoreInactive && !isActive) {
                 continue;
             }
 
-            let base_date = row[2];
+            const base_date = row[2];
             let date_str = null;
 
             if(base_date) {
-                let date_data = SSF.parse_date_code(base_date);
+                const date_data = SSF.parse_date_code(base_date);
                 // should be a Date object, now convert this to an ISO date string. Date object is in UTC
                 // when printing a string, but excel date is in "local timezone". Since we know the spreadsheet
                 // is generally produced in Sydney or Melbourne, we always force a local timezone of
