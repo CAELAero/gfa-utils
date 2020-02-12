@@ -162,7 +162,7 @@ describe('Parsing literal data', () => {
     });
 
     it("Skips rows that don't have proper data", () => {
-        let result = DirectivesLoader.listAllDirectives("tests/airworthiness/data/gfa_multi_row_ignore_inactive.xlsx", true);
+        let result = DirectivesLoader.listAllDirectives("tests/airworthiness/data/gfa_multi_row_ignore_inactive.xlsx", null, true);
 
         expect(result).toBeDefined();
         expect(result.length).toBe(2);
@@ -179,5 +179,52 @@ describe('Parsing literal data', () => {
         expect(entry.issueNumber).toBe(2);
         expect(entry.active).toBe(true);
         expect(entry.typeCertificate).toBe("Standard Cirrus");
+    });
+
+    it("Matches only the requested type cert", () => {
+        let result = DirectivesLoader.listAllDirectives("tests/airworthiness/data/gfa_multi_row_type_cert_match.xlsx", "General AD-AWAs");
+
+        expect(result).toBeDefined();
+        expect(result.length).toBe(2);
+
+        // Only check the relevant data to make sure we got the right row
+        let entry = result[0];
+        expect(entry.documentReference).toBe("CASA AD/GEN/87");
+        expect(entry.issueNumber).toBeUndefined();
+        expect(entry.active).toBe(false);
+
+        entry = result[1];
+        expect(entry.documentReference).toBe("CASA AD/GEN/87");
+        expect(entry.issueNumber).toBe(1);
+        expect(entry.active).toBe(true);
+    });
+});
+
+describe('Edge case hanlding', () => {
+    it("Type cert matches ignore zero length string", () => {
+        let result = DirectivesLoader.listAllDirectives("tests/airworthiness/data/gfa_multi_row_type_cert_match.xlsx", "");
+
+        expect(result).toBeDefined();
+        expect(result.length).toBe(4);
+
+        // Skip the detail checks
+    });
+
+    it("Type cert matches ignore empty string with spaces", () => {
+        let result = DirectivesLoader.listAllDirectives("tests/airworthiness/data/gfa_multi_row_type_cert_match.xlsx", "   ");
+
+        expect(result).toBeDefined();
+        expect(result.length).toBe(4);
+
+        // Skip the detail checks
+    });
+
+    it("Type cert matches ignore empty string with tabs", () => {
+        let result = DirectivesLoader.listAllDirectives("tests/airworthiness/data/gfa_multi_row_type_cert_match.xlsx", "    ");
+
+        expect(result).toBeDefined();
+        expect(result.length).toBe(4);
+
+        // Skip the detail checks
     });
 });

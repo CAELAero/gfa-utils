@@ -15,7 +15,7 @@ import { AircraftDirectiveData } from './aircraft-directive-data';
  * http://doc.glidingaustralia.org/index.php?option=com_docman&view=download&alias=2136-gfa-ad-an-awa-register
  */
 export class DirectivesLoader {
-    public static listAllDirectives(source: string, ignoreInactive?: boolean): AircraftDirectiveData[] {
+    public static listAllDirectives(source: string, matchTypeCertName?: string, ignoreInactive?: boolean): AircraftDirectiveData[] {
         if(!source) {
             throw new Error("No source given to parse");
         }
@@ -42,6 +42,8 @@ export class DirectivesLoader {
 
         let retval: AircraftDirectiveData[] = [];
 
+        let name_to_match = (matchTypeCertName && matchTypeCertName.trim().length > 1) ? matchTypeCertName.trim() : null;
+
         // Need to skip the first 6 rows manually.
         for(let i = 5; i < sheet_data.length; i++) {
             let row = sheet_data[i];
@@ -50,6 +52,19 @@ export class DirectivesLoader {
             // columns as they are comment rows. 7 columns in regular data, but if the
             // active field value is missing, then the reader will only tell us there are 6
             if(row.length < 6) {
+                continue;
+            }
+
+            // Column data is:
+            // [0]: AD/AN Document AD/AN Ref
+            // [1]: AD/AN Document Issue Nbr
+            // [2]: AD/AN Document Date Issued
+            // [3]: Type Certificate name
+            // [4]: AD Type
+            // [5]: AD Subject
+            // [6]: AD/AN Document Status
+
+            if(name_to_match && name_to_match != row[3]) {
                 continue;
             }
 
