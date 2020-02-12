@@ -1,3 +1,5 @@
+[![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
+![GitHub package.json version](https://img.shields.io/github/package-json/v/CAELAero/gfa-utils)
 [![Build Status](https://travis-ci.com/CAELAero/gfa-utils.svg?branch=master)](https://travis-ci.com/CAELAero/gfa-utils)
 [![Coverage Status](https://coveralls.io/repos/github/CAELAero/gfa-utils/badge.svg)](https://coveralls.io/github/CAELAero/gfa-utils)
 # CAEL Aero GFA Utils
