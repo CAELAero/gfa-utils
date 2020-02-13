@@ -15,6 +15,14 @@ import { AircraftDirectiveData } from './aircraft-directive-data';
  * http://doc.glidingaustralia.org/index.php?option=com_docman&view=download&alias=2136-gfa-ad-an-awa-register
  */
 export class DirectivesLoader {
+
+    /**
+     * Parse the provided input file and return the list of valid entries that are found
+     * in it, that match the provided query parameters
+     *
+     * @param {string} source The absolute path to the source file that will be loaded
+     * @param {string} matchTypeCertName [null] Optional cert name
+     */
     public static listAllDirectives(source: string, matchTypeCertName?: string, ignoreInactive?: boolean): AircraftDirectiveData[] {
         if(!source) {
             throw new Error("No source given to parse");

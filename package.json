@@ -38,6 +38,7 @@
     "coverage": "jest --coverage  && cat ./coverage/lcov.info | coveralls",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "lint": "tslint -p tsconfig.json",
+    "docs": "typedoc --out docs src",
     "prepublishOnly": "npm test && npm run lint",
     "preversion": "npm run lint",
     "version": "npm run format && git add -A src",
@@ -53,6 +54,7 @@
     "ts-jest": "^25.2.0",
     "tslint": "^6.0.0",
     "tslint-config-prettier": "^1.18.0",
+    "typedoc": "^0.16.9",
     "typescript": "^3.7.2",
     "xlsx": "^0.15.5"
   }
