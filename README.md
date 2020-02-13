@@ -1,3 +1,8 @@
+
+# CAEL Aero GFA Utils
+
+> Utilities for interacting with Gliding Federation of Australia files and systems. 
+
 ![npm type definitions](https://img.shields.io/npm/types/@cael-aero/gfa-utils)
 ![node](https://img.shields.io/node/v/@cael-aero/gfa-utils)
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
@@ -5,10 +10,11 @@
 [![Build Status](https://travis-ci.com/CAELAero/gfa-utils.svg?branch=master)](https://travis-ci.com/CAELAero/gfa-utils)
 [![Coverage Status](https://coveralls.io/repos/github/CAELAero/gfa-utils/badge.svg)](https://coveralls.io/github/CAELAero/gfa-utils)
 
-# CAEL Aero GFA Utils
+## Documentation
 
-Utilities for interacting with Gliding Federation of Australia files and systems. 
-
+* Repository https://github.com/CAELAero/gfa-utils
+* API Documentation: https://caelaero.github.io/gfa-utils/
+ 
 ## Installation
 
 ```sh
