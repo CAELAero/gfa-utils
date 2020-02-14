@@ -6,7 +6,7 @@
   },
   "collectCoverage": true,
   "collectCoverageFrom": [
-    "src/**/*.ts"
+    "src/**/{!(*-type),}.ts"
   ],
   "moduleFileExtensions": ["js", "ts", "json", "node"],
   "preset": "ts-jest",
