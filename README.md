@@ -32,7 +32,7 @@ var data = gfaUtils.loadAllDirectives('somefile.xls');
 
 ### TypeScript
 ```typescript
-import { DirectivesLoader } from '@cael-aero/gfa-utils';
+import { AircraftDirectiveData, DirectivesLoader } from '@cael-aero/gfa-utils';
 
 let data:AircraftDirectiveData[] = DirectivesLoader.loadAllDirectives('somefile.xls');
 ```
