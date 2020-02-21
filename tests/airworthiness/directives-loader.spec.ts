@@ -228,3 +228,13 @@ describe('Edge case hanlding', () => {
         // Skip the detail checks
     });
 });
+
+/** Normally skipped so that we don't take forever on the tests and this doesn't add any value */
+describe.skip("Load full file", () => {
+    it("Can load the whole 2020 dataset ", () => {
+        let result = DirectivesLoader.listAllDirectives("tests/airworthiness/data/full_data_sheet_2020_01_31.xls");
+
+        expect(result).toBeDefined();
+        expect(result.length).toBe(2496);
+    });
+});
