@@ -6,8 +6,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 export enum ADType {
-  ENGINE = 'Engine',
-  GLIDER = 'Glider Type',
-  GENERAL = 'General',
-  PROPELLER = 'Prop',
+    ENGINE = 'Engine',
+    GLIDER = 'Glider Type',
+    GENERAL = 'General',
+    PROPELLER = 'Prop',
 }
