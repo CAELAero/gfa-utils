@@ -58,6 +58,8 @@
     "tslint": "^6.0.0",
     "tslint-config-prettier": "^1.18.0",
     "typedoc": "^0.16.10",
+    "typedoc-plugin-internal-external": "^2.1.1",
+    "typedoc-plugin-nojekyll": "^1.0.1",
     "typescript": "^3.8.2"
   }
 }
