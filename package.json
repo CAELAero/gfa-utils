@@ -39,7 +39,7 @@
     "coverage": "jest --coverage  && cat ./coverage/lcov.info | coveralls",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "lint": "tslint -p tsconfig.json",
-    "docs": "typedoc --out docs src",
+    "docs": "typedoc --excludePrivate --excludeProtected --out docs src",
     "prepublishOnly": "npm test && npm run lint && npm run docs && git add docs/* && git commit -m \"Auto generated docs\" docs && git push",
     "preversion": "npm run lint",
     "version": "npm run format && git add -A src",
