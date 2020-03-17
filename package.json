@@ -61,6 +61,7 @@
     "typedoc-plugin-internal-external": "^2.1.1",
     "typedoc-plugin-nojekyll": "^1.0.1",
     "typescript": "^3.8.3",
-    "acorn": ">=7.1.1"
+    "acorn": ">=7.1.1",
+    "minimist": ">=1.2.5"
   }
 }
