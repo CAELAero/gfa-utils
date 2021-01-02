@@ -86,7 +86,7 @@ export class DirectivesLoader {
                 continue;
             }
 
-            const base_date: string = row[2] as string;
+            const base_date: number = row[2] as number;
             let date_str = null;
 
             if (base_date) {
