@@ -5,7 +5,7 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import { ParsingOptions, readFile, WorkBook, utils, SSF } from 'xlsx';
+import { readFile, WorkBook, utils, SSF } from 'xlsx';
 import { AircraftDirectiveData } from './aircraft-directive-data';
 
 /**
@@ -80,13 +80,13 @@ export class DirectivesLoader {
                 continue;
             }
 
-            const isActive: boolean = row[6] == null || 'active' === row[6].toLowerCase();
+            const isActive: boolean = row[6] == null || 'active' === (row[6] as string).toLowerCase();
 
             if (ignoreInactive && !isActive) {
                 continue;
             }
 
-            const base_date = row[2];
+            const base_date: string = row[2] as string;
             let date_str = null;
 
             if (base_date) {
@@ -96,7 +96,7 @@ export class DirectivesLoader {
                 // is generally produced in Sydney or Melbourne, we always force a local timezone of
                 // australia/sydney to fetch the matching date.
                 date_str =
-                    date_data.y +
+                    date_data.y.toString().padStart(4, '0') +
                     '-' +
                     date_data.m.toString().padStart(2, '0') +
                     '-' +
