@@ -5,26 +5,46 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree.
  */
+import * as fs from 'fs';
+
 import { ADType } from '../../src/airworthiness/directive-type';
 import { DirectivesLoader } from '../../src/airworthiness/directives-loader';
 
 describe('Erroneous input handling', () => {
-    it('generates an error if no file given', () => {
-        expect(() => { DirectivesLoader.listAllDirectives(null); }).toThrow();
+    it('generates an error if no file given', async () => {
+        expect.assertions(1);
+
+        try {
+            await DirectivesLoader.listAllDirectives(null);
+        } catch(err) {
+            expect(err).not.toBeNull();
+        }
     });
 
-    it('generates an error if file does not exist', () => {
-        expect(() => { DirectivesLoader.listAllDirectives("randompath.xls"); }).toThrowError();
+    it('generates an error if file does not exist', async () => {
+        expect.assertions(1);
+
+        try {
+            await DirectivesLoader.listAllDirectives("randompath.xls");
+        } catch(err) {
+            expect(err).not.toBeNull();
+        }
     });
 
-    it('generates an error if file is not an excel sheet', () => {
-        expect(() => { DirectivesLoader.listAllDirectives("tests/airworthiness/data/dummy_text_data.txt"); }).toThrowError();
+    it('generates an error if file is not an excel sheet', async () => {
+        expect.assertions(1);
+
+        try {
+            await DirectivesLoader.listAllDirectives("tests/airworthiness/data/dummy_text_data.txt");
+        } catch(err) {
+            expect(err).not.toBeNull();
+        }
     });
 });
 
 describe('Parsing literal data', () => {
-    it('handles a single line input with all data specified', () => {
-        let result = DirectivesLoader.listAllDirectives("tests/airworthiness/data/gfa_single_row_all_provided.xlsx");
+    it('handles a single line input with all data specified', async () => {
+        let result = await DirectivesLoader.listAllDirectives("tests/airworthiness/data/gfa_single_row_all_provided.xlsx");
 
         expect(result).toBeDefined();
         expect(result.length).toBe(1);
@@ -38,8 +58,8 @@ describe('Parsing literal data', () => {
         expect(entry.type).toBe(ADType.GLIDER);
         expect(entry.description).toBe("Inspection of the Control Column Mounting Bulkheads");
     });
-    it('handles a single line input with the issue number missing', () => {
-        let result = DirectivesLoader.listAllDirectives("tests/airworthiness/data/gfa_single_row_missing_issue.xlsx");
+    it('handles a single line input with the issue number missing', async () => {
+        let result = await DirectivesLoader.listAllDirectives("tests/airworthiness/data/gfa_single_row_missing_issue.xlsx");
 
         expect(result).toBeDefined();
         expect(result.length).toBe(1);
@@ -54,8 +74,8 @@ describe('Parsing literal data', () => {
         expect(entry.description).toBe("Inspection of the Control Column Mounting Bulkheads");
     });
 
-    it('handles a single line input with the type certificate missing', () => {
-        let result = DirectivesLoader.listAllDirectives("tests/airworthiness/data/gfa_single_row_missing_cert.xlsx");
+    it('handles a single line input with the type certificate missing', async () => {
+        let result = await DirectivesLoader.listAllDirectives("tests/airworthiness/data/gfa_single_row_missing_cert.xlsx");
 
         expect(result).toBeDefined();
         expect(result.length).toBe(1);
@@ -70,8 +90,8 @@ describe('Parsing literal data', () => {
         expect(entry.description).toBe("Inspection of the Control Column Mounting Bulkheads");
     });
 
-    it('handles a single line input with the issue date missing', () => {
-        let result = DirectivesLoader.listAllDirectives("tests/airworthiness/data/gfa_single_row_missing_date.xlsx");
+    it('handles a single line input with the issue date missing', async () => {
+        let result = await DirectivesLoader.listAllDirectives("tests/airworthiness/data/gfa_single_row_missing_date.xlsx");
 
         expect(result).toBeDefined();
         expect(result.length).toBe(1);
@@ -86,8 +106,8 @@ describe('Parsing literal data', () => {
         expect(entry.description).toBe("Inspection of the Control Column Mounting Bulkheads");
     });
 
-    it('handles a single line input with the AD Type missing', () => {
-        let result = DirectivesLoader.listAllDirectives("tests/airworthiness/data/gfa_single_row_missing_ad_type.xlsx");
+    it('handles a single line input with the AD Type missing', async () => {
+        let result = await DirectivesLoader.listAllDirectives("tests/airworthiness/data/gfa_single_row_missing_ad_type.xlsx");
 
         expect(result).toBeDefined();
         expect(result.length).toBe(1);
@@ -102,8 +122,8 @@ describe('Parsing literal data', () => {
         expect(entry.description).toBe("Inspection of the Control Column Mounting Bulkheads");
     });
 
-    it('Missing active entry is considered active', () => {
-        let result = DirectivesLoader.listAllDirectives("tests/airworthiness/data/gfa_single_row_missing_active.xlsx");
+    it('Missing active entry is considered active', async () => {
+        let result = await DirectivesLoader.listAllDirectives("tests/airworthiness/data/gfa_single_row_missing_active.xlsx");
 
         expect(result).toBeDefined();
         expect(result.length).toBe(1);
@@ -118,8 +138,8 @@ describe('Parsing literal data', () => {
         expect(entry.description).toBe("Inspection of the Control Column Mounting Bulkheads");
     });
 
-    it("Skips rows that don't have proper data", () => {
-        let result = DirectivesLoader.listAllDirectives("tests/airworthiness/data/gfa_multi_row_with_trailer.xlsx");
+    it("Skips rows that don't have proper data", async () => {
+        let result = await DirectivesLoader.listAllDirectives("tests/airworthiness/data/gfa_multi_row_with_trailer.xlsx");
 
         expect(result).toBeDefined();
         expect(result.length).toBe(4);
@@ -161,8 +181,8 @@ describe('Parsing literal data', () => {
         expect(entry.description).toBeDefined();
     });
 
-    it("Skips rows that don't have proper data", () => {
-        let result = DirectivesLoader.listAllDirectives("tests/airworthiness/data/gfa_multi_row_ignore_inactive.xlsx", null, true);
+    it("Skips rows that don't have proper data", async () => {
+        let result = await DirectivesLoader.listAllDirectives("tests/airworthiness/data/gfa_multi_row_ignore_inactive.xlsx", null, true);
 
         expect(result).toBeDefined();
         expect(result.length).toBe(2);
@@ -181,8 +201,8 @@ describe('Parsing literal data', () => {
         expect(entry.typeCertificate).toBe("Standard Cirrus");
     });
 
-    it("Matches only the requested type cert", () => {
-        let result = DirectivesLoader.listAllDirectives("tests/airworthiness/data/gfa_multi_row_type_cert_match.xlsx", "General AD-AWAs");
+    it("Matches only the requested type cert", async () => {
+        let result = await DirectivesLoader.listAllDirectives("tests/airworthiness/data/gfa_multi_row_type_cert_match.xlsx", "General AD-AWAs");
 
         expect(result).toBeDefined();
         expect(result.length).toBe(2);
@@ -200,9 +220,9 @@ describe('Parsing literal data', () => {
     });
 });
 
-describe('Edge case hanlding', () => {
-    it("Type cert matches ignore zero length string", () => {
-        let result = DirectivesLoader.listAllDirectives("tests/airworthiness/data/gfa_multi_row_type_cert_match.xlsx", "");
+describe('Edge case handling', () => {
+    it("Type cert matches ignore zero length string", async () => {
+        let result = await DirectivesLoader.listAllDirectives("tests/airworthiness/data/gfa_multi_row_type_cert_match.xlsx", "");
 
         expect(result).toBeDefined();
         expect(result.length).toBe(4);
@@ -210,8 +230,8 @@ describe('Edge case hanlding', () => {
         // Skip the detail checks
     });
 
-    it("Type cert matches ignore empty string with spaces", () => {
-        let result = DirectivesLoader.listAllDirectives("tests/airworthiness/data/gfa_multi_row_type_cert_match.xlsx", "   ");
+    it("Type cert matches ignore empty string with spaces", async () => {
+        let result = await DirectivesLoader.listAllDirectives("tests/airworthiness/data/gfa_multi_row_type_cert_match.xlsx", "   ");
 
         expect(result).toBeDefined();
         expect(result.length).toBe(4);
@@ -219,8 +239,8 @@ describe('Edge case hanlding', () => {
         // Skip the detail checks
     });
 
-    it("Type cert matches ignore empty string with tabs", () => {
-        let result = DirectivesLoader.listAllDirectives("tests/airworthiness/data/gfa_multi_row_type_cert_match.xlsx", "    ");
+    it("Type cert matches ignore empty string with tabs", async () => {
+        let result = await DirectivesLoader.listAllDirectives("tests/airworthiness/data/gfa_multi_row_type_cert_match.xlsx", "    ");
 
         expect(result).toBeDefined();
         expect(result.length).toBe(4);
@@ -229,10 +249,28 @@ describe('Edge case hanlding', () => {
     });
 });
 
+describe("Non-URL input", () => {
+    it("Handles a readable as source", async () => {
+        // Same test as the single row test, but we're going to load it ourselves as
+        // a file to generate the ReadableStream, then pass that to the loader. We do
+        // just a basic sanity test
+        const stream = fs.createReadStream("tests/airworthiness/data/gfa_single_row_all_provided.xlsx");
+        let result = await DirectivesLoader.listAllDirectives(stream);
+
+        expect(result).toBeDefined();
+        expect(result.length).toBe(1);
+
+        let entry = result[0];
+        expect(entry.documentReference).toBe("GFA AD 0017");
+    });
+
+    // Seems to be no way to create a test for Blob/File or ReadableStream.
+});
+
 /** Normally skipped so that we don't take forever on the tests and this doesn't add any value */
 describe.skip("Load full file", () => {
-    it("Can load the whole 2020 dataset ", () => {
-        let result = DirectivesLoader.listAllDirectives("tests/airworthiness/data/full_data_sheet_2020_01_31.xls");
+    it("Can load the whole 2020 dataset ", async () => {
+        let result = await DirectivesLoader.listAllDirectives("tests/airworthiness/data/full_data_sheet_2020_01_31.xls");
 
         expect(result).toBeDefined();
         expect(result.length).toBe(2496);

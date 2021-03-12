@@ -8,7 +8,8 @@
     "declarationMap": true,
     "lib": [
       "es6",
-      "esnext"
+      "esnext",
+      "dom"
     ],
     "module": "esnext",
     "esModuleInterop": true,
@@ -19,7 +20,7 @@
     "target": "es6",
     "moduleResolution": "node",
     "typeRoots": [
-      "node_modules/@types"
+      "./node_modules/@types"
     ]
   },
   "include": [

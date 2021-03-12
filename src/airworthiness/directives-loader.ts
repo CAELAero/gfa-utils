@@ -5,7 +5,10 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import { readFile, WorkBook, utils, SSF } from 'xlsx';
+import * as fs from 'fs';
+import { Readable } from "stream";
+
+import { readFile, read, WorkBook, utils, SSF } from 'xlsx';
 import { AircraftDirectiveData } from './aircraft-directive-data';
 
 /**
@@ -22,22 +25,20 @@ export class DirectivesLoader {
      * @param {string} source The absolute path to the source file that will be loaded
      * @param {string} matchTypeCertName [null] Optional cert name
      */
-    public static listAllDirectives(
-        source: string,
+    public static async listAllDirectives(
+        source: string | Readable | Blob,
         matchTypeCertName?: string,
         ignoreInactive?: boolean,
-    ): AircraftDirectiveData[] {
+    ): Promise<AircraftDirectiveData[]> {
+
         if (!source) {
             throw new Error('No source given to parse');
         }
 
         // First sheet is the Help Sheet, 2nd is the real data, 3rd is Websites to find stuff at
         // Use excel dates to ensure that we don't have TZ issues in conversions later.
-        const options = {
-            cellDates: false,
-        };
 
-        const workbook: WorkBook = readFile(source, options);
+        const workbook: WorkBook = await DirectivesLoader.readInput(source);
         const loaded_data = workbook.Sheets[workbook.SheetNames[1]];
 
         // Could we find the right sheet? undefined or null here if not. Throw error
@@ -107,5 +108,41 @@ export class DirectivesLoader {
         }
 
         return retval;
+    }
+
+    private static async readInput(source: string | Readable | ReadableStream | Blob): Promise<WorkBook> {
+        const options = {
+            cellDates: false,
+        };
+
+        if(typeof source === 'string') {
+            return readFile(source as string, options);
+        } else if(source instanceof Readable) {
+            // ReadableStream is a derived type of Readable, so we're good here
+            return DirectivesLoader.readStream(source as Readable);
+        } else if(source instanceof ReadableStream) {
+            let readable = new Readable().wrap(source as any);
+            return DirectivesLoader.readStream(readable);
+        } else if(source instanceof Blob) {
+            let blob_stream = (source as Blob).stream();
+            let readable = new Readable().wrap(blob_stream as any);
+            return DirectivesLoader.readStream(readable);
+        } else {
+            throw new Error("Unhandled type of input source");
+        }
+    }
+
+    private static async readStream(stream: Readable): Promise<WorkBook> {
+        let buffers: Uint8Array[] = [];
+
+        let reader = new Promise<WorkBook>((resolve, reject) => {
+            stream.on('data', data => { buffers.push(data); });
+            stream.on('end', () => resolve(
+                read(Buffer.concat(buffers), { type: "buffer" })
+            ));
+            stream.on('error', reject);
+        });
+
+        return reader;
     }
 }
