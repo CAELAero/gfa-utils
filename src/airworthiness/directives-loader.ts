@@ -5,7 +5,6 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import * as fs from 'fs';
 import { Readable } from "stream";
 
 import { readFile, read, WorkBook, utils, SSF } from 'xlsx';
@@ -43,9 +42,10 @@ export class DirectivesLoader {
 
         // Could we find the right sheet? undefined or null here if not. Throw error
         if (!loaded_data) {
-            throw new Error('Unable to locate the required sheet in ' + source);
+            throw new Error(`Unable to locate the required sheet in input data`);
         }
 
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const sheet_data: any[][] = utils.sheet_to_json(loaded_data, {
             header: 1,
             blankrows: false,
@@ -116,16 +116,18 @@ export class DirectivesLoader {
         };
 
         if(typeof source === 'string') {
-            return readFile(source as string, options);
+            return readFile(source, options);
         } else if(source instanceof Readable) {
             // ReadableStream is a derived type of Readable, so we're good here
-            return DirectivesLoader.readStream(source as Readable);
+            return DirectivesLoader.readStream(source);
         } else if(source instanceof ReadableStream) {
-            let readable = new Readable().wrap(source as any);
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const readable = new Readable().wrap(source as any);
             return DirectivesLoader.readStream(readable);
         } else if(source instanceof Blob) {
-            let blob_stream = (source as Blob).stream();
-            let readable = new Readable().wrap(blob_stream as any);
+            const blob_stream = source.stream();
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const readable = new Readable().wrap(blob_stream as any);
             return DirectivesLoader.readStream(readable);
         } else {
             throw new Error("Unhandled type of input source");
@@ -133,9 +135,9 @@ export class DirectivesLoader {
     }
 
     private static async readStream(stream: Readable): Promise<WorkBook> {
-        let buffers: Uint8Array[] = [];
+        const buffers: Uint8Array[] = [];
 
-        let reader = new Promise<WorkBook>((resolve, reject) => {
+        const reader = new Promise<WorkBook>((resolve, reject) => {
             stream.on('data', data => { buffers.push(data); });
             stream.on('end', () => resolve(
                 read(Buffer.concat(buffers), { type: "buffer" })
