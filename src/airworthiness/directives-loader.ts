@@ -5,7 +5,7 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import { Readable } from "stream";
+import { Readable } from 'stream';
 
 import { readFile, read, WorkBook, utils, SSF } from 'xlsx';
 import { AircraftDirectiveData } from './aircraft-directive-data';
@@ -29,7 +29,6 @@ export class DirectivesLoader {
         matchTypeCertName?: string,
         ignoreInactive?: boolean,
     ): Promise<AircraftDirectiveData[]> {
-
         if (!source) {
             throw new Error('No source given to parse');
         }
@@ -115,22 +114,22 @@ export class DirectivesLoader {
             cellDates: false,
         };
 
-        if(typeof source === 'string') {
+        if (typeof source === 'string') {
             return readFile(source, options);
-        } else if(source instanceof Readable) {
+        } else if (source instanceof Readable) {
             // ReadableStream is a derived type of Readable, so we're good here
             return DirectivesLoader.readStream(source);
-        } else if(source instanceof ReadableStream) {
+        } else if (source instanceof ReadableStream) {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const readable = new Readable().wrap(source as any);
             return DirectivesLoader.readStream(readable);
-        } else if(source instanceof Blob) {
+        } else if (source instanceof Blob) {
             const blob_stream = source.stream();
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const readable = new Readable().wrap(blob_stream as any);
             return DirectivesLoader.readStream(readable);
         } else {
-            throw new Error("Unhandled type of input source");
+            throw new Error('Unhandled type of input source');
         }
     }
 
@@ -138,10 +137,10 @@ export class DirectivesLoader {
         const buffers: Uint8Array[] = [];
 
         const reader = new Promise<WorkBook>((resolve, reject) => {
-            stream.on('data', data => { buffers.push(data); });
-            stream.on('end', () => resolve(
-                read(Buffer.concat(buffers), { type: "buffer" })
-            ));
+            stream.on('data', (data) => {
+                buffers.push(data);
+            });
+            stream.on('end', () => resolve(read(Buffer.concat(buffers), { type: 'buffer' })));
             stream.on('error', reject);
         });
 
