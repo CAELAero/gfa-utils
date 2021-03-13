@@ -21,7 +21,7 @@
     "npm": ">=6.10.0"
   },
   "files": [
-    "build/lib/**/*",
+    "lib/**/*",
     "LICENSE.md",
     "tsconfig.json"
   ],
