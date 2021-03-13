@@ -13,9 +13,9 @@
     ],
     "module": "esnext",
     "esModuleInterop": true,
-    "outDir": "build/lib",
+    "outDir": "lib",
     "rootDirs": [
-      "src/airworthiness"
+      "src"
     ],
     "strict": true,
     "sourceMap": true,

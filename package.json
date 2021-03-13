@@ -14,8 +14,8 @@
     "airworthiness",
     "typescript"
   ],
-  "main": "build/lib/index.js",
-  "types": "build/lib/index.d.ts",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "engines": {
     "node": ">=10.0.0",
     "npm": ">=6.10.0"
