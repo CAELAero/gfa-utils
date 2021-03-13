@@ -1,7 +1,7 @@
 {
   "name": "@cael-aero/gfa-utils",
   "description": "Utilities for interacting with GFA Data",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "license": "BSD-3-Clause",
   "readme": "README.md",
   "author": "Justin Couch",
