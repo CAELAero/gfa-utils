@@ -14,9 +14,7 @@
     "module": "esnext",
     "esModuleInterop": true,
     "outDir": "lib",
-    "rootDirs": [
-      "src"
-    ],
+    "rootDir": "src",
     "strict": true,
     "sourceMap": true,
     "target": "es6",

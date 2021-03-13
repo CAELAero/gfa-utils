@@ -67,7 +67,7 @@ typings/
 /out-tsc
 # Only exists if Bazel was run
 /bazel-out
-/build
+/lib
 
 # profiling files
 chrome-profiler-events.json
