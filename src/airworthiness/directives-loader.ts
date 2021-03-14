@@ -25,7 +25,7 @@ export class DirectivesLoader {
      * @param {string} matchTypeCertName [null] Optional cert name
      */
     public static async listAllDirectives(
-        source: string | Readable | Blob,
+        source: string | Readable | ReadableStream | Blob,
         matchTypeCertName?: string,
         ignoreInactive?: boolean,
     ): Promise<AircraftDirectiveData[]> {
