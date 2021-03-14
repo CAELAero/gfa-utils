@@ -11,7 +11,7 @@
       "esnext",
       "dom"
     ],
-    "module": "esnext",
+    "module": "commonjs",
     "esModuleInterop": true,
     "outDir": "lib",
     "rootDir": "src",
