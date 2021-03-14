@@ -30,6 +30,7 @@
     "url": "git+https://github.com/CAELAero/gfa-utils"
   },
   "publishConfig": {
+    "tag": "latest",
     "cache": "~/.npm",
     "access": "public",
     "registry": "https://registry.npmjs.org/"
