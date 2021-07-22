@@ -48,7 +48,7 @@
     "postversion": "git push && git push --tags"
   },
   "dependencies": {
-    "xlsx": "^0.15.6"
+    "xlsx": "^0.17.0"
   },
   "devDependencies": {
     "@types/jest": "^26.x",
