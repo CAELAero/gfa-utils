@@ -111,7 +111,17 @@ export class DirectivesLoader {
             const type_cert: string = row[3] as string;
 
             // eslint-disable-next-line prettier/prettier
-            retval.push(AircraftDirectiveData.create(directive_ref, directive_issue, isActive, date_str, type_cert, ad_type, description));
+            retval.push(
+                AircraftDirectiveData.create(
+                    directive_ref,
+                    directive_issue,
+                    isActive,
+                    date_str,
+                    type_cert,
+                    ad_type,
+                    description,
+                ),
+            );
         }
 
         return retval;
