@@ -8,6 +8,7 @@
 import { Readable } from 'stream';
 
 import { readFile, read, WorkBook, utils, SSF } from 'xlsx';
+import { ADType } from '..';
 import { AircraftDirectiveData } from './aircraft-directive-data';
 
 /**
@@ -103,7 +104,14 @@ export class DirectivesLoader {
                     date_data.d.toString().padStart(2, '0');
             }
 
-            retval.push(AircraftDirectiveData.create(row[0], row[1], isActive, date_str, row[3], row[4], row[5]));
+            const directive_ref: string = row[0] as string;
+            const directive_issue: number = row[1] as number;
+            const description: string = row[5] as string;
+            const ad_type: ADType = row[4] as ADType;
+            const type_cert: string = row[3] as string;
+
+            // eslint-disable-next-line prettier/prettier
+            retval.push(AircraftDirectiveData.create(directive_ref, directive_issue, isActive, date_str, type_cert, ad_type, description));
         }
 
         return retval;
@@ -121,11 +129,13 @@ export class DirectivesLoader {
             return DirectivesLoader.readStream(source);
         } else if (source instanceof ReadableStream) {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
             const readable = new Readable().wrap(source as any);
             return DirectivesLoader.readStream(readable);
         } else if (source instanceof Blob) {
             const blob_stream = source.stream();
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
             const readable = new Readable().wrap(blob_stream as any);
             return DirectivesLoader.readStream(readable);
         } else {
@@ -138,7 +148,9 @@ export class DirectivesLoader {
 
         const reader = new Promise<WorkBook>((resolve, reject) => {
             stream.on('data', (data) => {
-                buffers.push(data);
+                if (data instanceof Uint8Array) {
+                    buffers.push(data);
+                }
             });
             stream.on('end', () => resolve(read(Buffer.concat(buffers), { type: 'buffer' })));
             stream.on('error', reject);
