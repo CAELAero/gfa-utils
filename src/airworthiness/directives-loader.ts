@@ -138,14 +138,12 @@ export class DirectivesLoader {
             // ReadableStream is a derived type of Readable, so we're good here
             return DirectivesLoader.readStream(source);
         } else if (source instanceof ReadableStream) {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-explicit-any
             const readable = new Readable().wrap(source as any);
             return DirectivesLoader.readStream(readable);
         } else if (source instanceof Blob) {
             const blob_stream = source.stream();
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-explicit-any
             const readable = new Readable().wrap(blob_stream as any);
             return DirectivesLoader.readStream(readable);
         } else {
