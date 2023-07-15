@@ -7,7 +7,9 @@
  */
 import { Readable } from 'stream';
 
-import { readFile, read, WorkBook, utils, SSF } from 'xlsx';
+import { readFile, read, WorkBook, utils } from 'xlsx';
+import { parse_date_code, SSF$Date } from 'ssf';
+
 import { ADType } from '..';
 import { AircraftDirectiveData } from './aircraft-directive-data';
 
@@ -91,7 +93,7 @@ export class DirectivesLoader {
             let date_str = null;
 
             if (base_date) {
-                const date_data = SSF.parse_date_code(base_date);
+                const date_data: SSF$Date = parse_date_code(base_date);
                 // should be a Date object, now convert this to an ISO date string. Date object is in UTC
                 // when printing a string, but excel date is in "local timezone". Since we know the spreadsheet
                 // is generally produced in Sydney or Melbourne, we always force a local timezone of
