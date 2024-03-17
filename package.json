@@ -47,9 +47,6 @@
     "version": "npm run format && git add -A src",
     "postversion": "git push && git push --tags"
   },
-  "dependencies": {
-    "xlsx": "^0.18.0"
-  },
   "devDependencies": {
     "@types/jest": "^29.x",
     "@types/node": "^20.x",
@@ -59,14 +56,18 @@
     "coveralls": "^3.1",
     "eslint": "^8.x",
     "eslint-config-prettier": "^9.x",
-    "eslint-plugin-prettier": "^5.x",
     "eslint-plugin-import": "^2.x",
     "eslint-plugin-prefer-arrow": "^1.2",
+    "eslint-plugin-prettier": "^5.x",
     "jest": "^29.0",
     "minimist": ">=1.2.8",
     "prettier": "^3.x",
     "ts-jest": "^29.0",
     "typedoc": "^0.25",
     "typescript": "^5.4"
+  },
+  "dependencies": {
+    "ssf": "https://cdn.sheetjs.com/ssf-0.11.3/ssf-0.11.3.tgz",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.1/xlsx-0.20.1.tgz"
   }
 }
