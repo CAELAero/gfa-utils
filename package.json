@@ -62,11 +62,14 @@
     "minimist": ">=1.2.8",
     "prettier": "^3.x",
     "ts-jest": "^29.0",
-    "typedoc": "^0.25",
-    "typescript": "^5.4"
+    "typedoc": "^0.28",
+    "typescript": "6.x"
   },
   "dependencies": {
     "ssf": "https://cdn.sheetjs.com/ssf-0.11.3/ssf-0.11.3.tgz",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
+  },
+  "allowScripts": {
+    "fsevents@2.3.3": true
   }
 }
